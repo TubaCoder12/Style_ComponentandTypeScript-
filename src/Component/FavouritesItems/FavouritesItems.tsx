@@ -7,6 +7,7 @@ import {
   removeFromFavourite,
 } from "../../App/Feature/Slice/FavouriteSlice";
 import { errorToast } from "../Helper/Messages";
+import Button from "../Ui/Button";
 
 // Styled Components
 const Section = styled.section`
@@ -19,6 +20,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
+  justify-content: space-between;
 `;
 
 const Title = styled.h2`
@@ -27,21 +29,6 @@ const Title = styled.h2`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`;
-
-const ClearButton = styled.button`
-  margin-left: auto;
-  background-color: #ef4444;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #dc2626;
-  }
 `;
 
 const Grid = styled.div`
@@ -100,20 +87,6 @@ const Price = styled.span`
   font-weight: 700;
 `;
 
-const RemoveButton = styled.button`
-  background-color: #ef4444;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #dc2626;
-  }
-`;
-
 const EmptyState = styled.div`
   text-align: center;
   padding: 5rem 0;
@@ -149,13 +122,14 @@ const FavouritesItems = () => {
         <Title>
           <FaHeart color="#ef4444" /> My Favourites
         </Title>
-        <ClearButton
+        <Button
+          bgColor="red"
           onClick={() => {
             dispatch(clearFavourites(errorToast("All Favourite is clear")));
           }}
         >
           Clear All Favourites
-        </ClearButton>
+        </Button>
       </Header>
 
       <Grid>
@@ -166,14 +140,15 @@ const FavouritesItems = () => {
             <ProductCategory>Category: {product.category}</ProductCategory>
             <CardFooter>
               <Price>${product.price}</Price>
-              <RemoveButton
+              <Button
+                bgColor="red"
                 onClick={() => {
                   dispatch(removeFromFavourite(product.id));
                   errorToast("Remove from Favourite");
                 }}
               >
                 Remove
-              </RemoveButton>
+              </Button>
             </CardFooter>
           </Card>
         ))}

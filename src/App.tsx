@@ -11,6 +11,9 @@ import SignIn from "./Component/Login/Login";
 import FavouritesItems from "./Component/FavouritesItems/FavouritesItems";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SelectedCart from "./Component/SelectedCart/SelectedCart";
+import Checkout from "./Component/Checkout/Checkout";
+import ProtectedRoutes from "./Routes/ProtectedRoute";
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -18,20 +21,11 @@ const App: React.FC = () => {
       <BrowserRouter>
         <ToastContainer />
         <Routes>
-          {/* Routes wrapped in Layout */}
           <Route
             path="/"
             element={
               <Layout>
                 <Home />
-              </Layout>
-            }
-          />
-          <Route
-            path="/product/:id"
-            element={
-              <Layout>
-                <DetailPage />
               </Layout>
             }
           />
@@ -51,6 +45,34 @@ const App: React.FC = () => {
               </Layout>
             }
           />
+          <Route
+            path="/cart"
+            element={
+              <Layout>
+                <SelectedCart />
+              </Layout>
+            }
+          />
+
+          <Route element={<ProtectedRoutes />}>
+            <Route
+              path="/product/:id"
+              element={
+                <Layout>
+                  <DetailPage />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/checkout"
+              element={
+                <Layout>
+                  <Checkout />
+                </Layout>
+              }
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

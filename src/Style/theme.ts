@@ -1,9 +1,9 @@
 // theme.ts
-import type { DefaultTheme } from "styled-components"; // ✅ type-only import
+import type { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
   colors: {
-    primary: "#ff6600",
+    primary: "red",
     secondary: "#333333",
     background: "#f5f5f5",
     text: "#222222",

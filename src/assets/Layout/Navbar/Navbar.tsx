@@ -53,21 +53,26 @@ const RightSection = styled.div`
   gap: 1rem;
 `;
 
-const FavouritesLink = styled(Link)`
+const IconLink = styled(Link)`
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.5rem;
 `;
 
 const Badge = styled.span`
   position: absolute;
   top: -6px;
-  right: -6px;
-  background: white;
-  border: 1px solid black;
-  color: black;
+  right: -8px;
+  background: ${({ theme }) => theme.colors.primary || "red"};
+  color: white;
   font-size: 0.65rem;
-  padding: 0.15rem 0.35rem;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   font-weight: bold;
 `;
@@ -78,6 +83,7 @@ const Navbar: React.FC = () => {
 
   const user = useSelector((state: RootState) => state.auth.user);
   const favourites = useSelector((state: RootState) => state.favourites.items);
+  const cart = useSelector((state: RootState) => state.cart.items);
 
   const logout = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -105,19 +111,23 @@ const Navbar: React.FC = () => {
       </NavLinks>
 
       <RightSection>
-        <FavouritesLink to="/favouritesItems">
+        {/* Favourites */}
+        <IconLink to="/favouritesItems">
           {favourites.length > 0 ? (
             <FaHeart color="red" />
           ) : (
             <FaRegHeart color="gray" />
           )}
           {favourites.length > 0 && <Badge>{favourites.length}</Badge>}
-        </FavouritesLink>
+        </IconLink>
 
-        <Link to="/cart">
+        {/* Cart */}
+        <IconLink to="/cart">
           <HiOutlineShoppingCart size={26} color="gray" />
-        </Link>
+          {cart.length > 0 && <Badge>{cart.length}</Badge>}
+        </IconLink>
 
+        {/* Auth Button */}
         {user ? (
           <Button onClick={logout}>Logout</Button>
         ) : (

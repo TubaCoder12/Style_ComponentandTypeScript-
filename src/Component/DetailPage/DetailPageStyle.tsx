@@ -58,3 +58,20 @@ export const Category = styled.p`
 export const RatingWrapper = styled.div`
   margin-top: 0.5rem;
 `;
+
+export const QuantityControl = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const QuantityButton = styled.button`
+  background: #e5e7eb;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #d1d5db;
+  }
+`;

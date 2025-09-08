@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Button from "../Ui/Button";
 import useProduct from "../../Hooks/UseProduct";
@@ -25,12 +25,14 @@ import {
 import { RootState, AppDispatch } from "../../App/store";
 import { Product } from "../../Interface/Interface";
 import { errorToast, successToast } from "../Helper/Messages";
+import { addToCart } from "../../App/Feature/Slice/CardSlice";
 
 const Products: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const favourites = useSelector((state: RootState) => state.favourites.items);
-
+  const user = useSelector((state: RootState) => state.auth.user);
   const { data, isLoading, isError, error } = useProduct();
+  const naviagte = useNavigate();
 
   if (isLoading) return <h1>Loading ...</h1>;
   if (isError) return <h1>Something went wrong</h1>;
@@ -97,7 +99,19 @@ const Products: React.FC = () => {
 
               <ProductCategory>Category: {product.category}</ProductCategory>
               <Price>Price: {product.price} Rs</Price>
-              <Button>Add To Cart</Button>
+              <Button
+                onClick={() => {
+                  if (user == null) {
+                    errorToast("please login first");
+                    naviagte("/login");
+                  } else {
+                    successToast("Product Added in cart");
+                    dispatch(addToCart(product));
+                  }
+                }}
+              >
+                Add To Cart
+              </Button>
             </Card>
           );
         })}
