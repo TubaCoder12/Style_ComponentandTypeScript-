@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,20 +25,20 @@ import { RootState, AppDispatch } from "../../App/store";
 import { Product } from "../../Interface/Interface";
 import { errorToast, successToast } from "../Helper/Messages";
 import { addToCart } from "../../App/Feature/Slice/CardSlice";
+import { Loader } from "../Checkout/CheckoutStyle";
 
-const Products: React.FC = () => {
+const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
   const favourites = useSelector((state: RootState) => state.favourites.items);
   const user = useSelector((state: RootState) => state.auth.user);
   const { data, isLoading, isError, error } = useProduct();
   const naviagte = useNavigate();
 
-  if (isLoading) return <h1>Loading ...</h1>;
+  if (isLoading) return <Loader />;
   if (isError) return <h1>Something went wrong</h1>;
   if (error) return <h1>{error.message}</h1>;
 
-  const toggleFavourite = (product: Product) => {
-    const isFav = favourites.some((item) => item.id === product.id);
+  const toggleFavourite = (product: Product, isFav: boolean) => {
     if (isFav) {
       dispatch(removeFromFavourite(product.id));
       errorToast("Deleted from Favourite");
@@ -67,7 +66,7 @@ const Products: React.FC = () => {
                 <ProductImage src={product.image} alt={product.title} />
 
                 <button
-                  onClick={() => toggleFavourite(product)}
+                  onClick={() => toggleFavourite(product, isFav)}
                   style={{
                     position: "absolute",
                     top: "0.5rem",
@@ -77,7 +76,8 @@ const Products: React.FC = () => {
                     padding: "0.5rem",
                     border: "none",
                     cursor: "pointer",
-                    zIndex: "10px",
+                    zIndex: "100px",
+                    display: "flex",
                   }}
                 >
                   {isFav ? <FaHeart color="red" /> : <FaRegHeart color="red" />}

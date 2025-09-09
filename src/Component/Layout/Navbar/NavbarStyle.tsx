@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 export const NavbarContainer = styled.nav`
   background: ${({ theme }) => theme.colors.white};
   padding: 1rem 2rem;
@@ -10,18 +11,17 @@ export const NavbarContainer = styled.nav`
 export const Logo = styled.h1`
   font-size: 1.5rem;
   color: ${({ theme }) => theme.colors.secondary};
-  margin: 0;
-  flex: 1; /* Logo left */
+  font-weight: bold;
 `;
 
 export const NavLinks = styled.ul`
   list-style: none;
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   margin: 0;
   padding: 0;
+  flex: 1;
   justify-content: center;
-  flex: 2; /* Links center me */
 `;
 
 export const NavItem = styled.li`
@@ -38,22 +38,31 @@ export const NavItem = styled.li`
 `;
 
 export const RightSection = styled.div`
-  flex: 1; /* Button right */
   display: flex;
-  justify-content: flex-end;
-`;
-export const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items:center
-  cursor: pointer;
+  align-items: center;
+  gap: 1rem;
 `;
 
-// import {
-//   NavItem,
-//   NavLinks,
-//   NavbarContainer,
-//   Logo,
-//   RightSection,
-//   IconWrapper,
-// } from "./NavbarStyle";
+export const IconLink = styled(Link)`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+`;
+
+export const Badge = styled.span`
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: ${({ theme }) => theme.colors.primary || "red"};
+  color: white;
+  font-size: 0.65rem;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+`;

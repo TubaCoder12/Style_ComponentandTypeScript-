@@ -35,6 +35,7 @@ export const ProductImage = styled.img`
   width: 100%;
   max-width: 350px;
   border-radius: 12px;
+  
 `;
 
 export const Description = styled.p`
@@ -49,10 +50,18 @@ export const Price = styled.strong`
   margin-bottom: 0.5rem;
 `;
 
-export const Category = styled.p`
+export const Category = styled.span`
+  display: inline-flex; // fit content, allow padding
+  align-items: center; // vertically center text
+  justify-content: center; // horizontally center text
   font-size: 0.9rem;
-  color: ${({ theme }) => theme.colors.secondary || "#555"};
+  color: ${({ theme }) => theme.colors.white || "#fff"};
+  background: red;
+  padding: 8px 12px;
+  border-radius: 8px;
   margin-bottom: 0.5rem;
+  width: auto; // ensure no full width
+  max-width: fit-content; // just to be extra safe
 `;
 
 export const RatingWrapper = styled.div`

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../App/Feature/Slice/CardSlice";
 import useCountries from "../../Hooks/UseCountries";
 import { Country } from "../../Interface/Interface";
@@ -24,14 +24,14 @@ import {
   ErrorBox,
   Loader,
 } from "./CheckoutStyle";
-import { AppDispatch } from "../../App/store";
+import { AppDispatch, RootState } from "../../App/store";
 
 import { FormData } from "../../Interface/Interface";
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-
+  const cart = useSelector((state: RootState) => state.cart.items);
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -45,6 +45,7 @@ const Checkout: React.FC = () => {
     cardExpiry: "",
     cardCVC: "",
     specialInstructions: "",
+    OrderedProducts: [],
   });
 
   const { data, isPending, isError } = useCountries();
@@ -61,7 +62,22 @@ const Checkout: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("Order Data:", formData);
+
+    // Ordered products banaye
+    const orderedProducts = cart.map((product) => ({
+      title: product.title,
+      quantity: product.quantity,
+      price: product.price,
+      total: (product.price * product.quantity).toFixed(2),
+    }));
+
+    // formData update karo
+    const finalOrder = {
+      ...formData,
+      OrderedProducts: orderedProducts,
+    };
+
+    console.log("Final Order Data:", finalOrder);
 
     Swal.fire({
       title: "🎉 Order Confirmed!",
@@ -89,6 +105,7 @@ const Checkout: React.FC = () => {
         {/* Personal Info */}
         <Section>
           <SectionTitle>Personal Information</SectionTitle>
+
           <Grid columns={2}>
             <div>
               <Label>Full Name *</Label>

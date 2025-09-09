@@ -1,11 +1,10 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./Style/theme";
 import GlobalStyle from "./GlobalStyle/GlobalStyle";
 
 import Home from "./Component/Home/Home";
-import Layout from "./assets/Layout/Layout";
+import Layout from "./Component/Layout/Layout";
 import DetailPage from "./Component/DetailPage/DetailPage";
 import SignIn from "./Component/Login/Login";
 import FavouritesItems from "./Component/FavouritesItems/FavouritesItems";
@@ -14,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SelectedCart from "./Component/SelectedCart/SelectedCart";
 import Checkout from "./Component/Checkout/Checkout";
 import ProtectedRoutes from "./Routes/ProtectedRoute";
-const App: React.FC = () => {
+const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
@@ -53,17 +52,15 @@ const App: React.FC = () => {
               </Layout>
             }
           />
-
+          <Route
+            path="/product/:id"
+            element={
+              <Layout>
+                <DetailPage />
+              </Layout>
+            }
+          />
           <Route element={<ProtectedRoutes />}>
-            <Route
-              path="/product/:id"
-              element={
-                <Layout>
-                  <DetailPage />
-                </Layout>
-              }
-            />
-
             <Route
               path="/checkout"
               element={

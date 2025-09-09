@@ -16,6 +16,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    // Yes, it’s basically a type-check for the user object that comes with the action.
     Login: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
       localStorage.setItem("userData", JSON.stringify(action.payload));

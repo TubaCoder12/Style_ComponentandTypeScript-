@@ -39,6 +39,15 @@ export interface Country {
   cca3: string;
 }
 
+// Ek single product ka structure
+export interface OrderedProduct {
+  title: string;
+  quantity: number;
+  price: number;
+  total: string;
+}
+
+// Form data jisme OrderedProducts bhi array hai
 export interface FormData {
   name: string;
   email: string;
@@ -52,4 +61,14 @@ export interface FormData {
   cardExpiry: string;
   cardCVC: string;
   specialInstructions: string;
+  OrderedProducts: OrderedProduct[]; // 👈 yahan array banaya
+}
+
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+export interface CartState {
+  items: CartItem[];
+  shippingCharges: number;
 }

@@ -24,6 +24,7 @@ import {
   decreaseQuantity,
   increaseQuantity,
 } from "../../App/Feature/Slice/CardSlice";
+import Loader from "../Loader/Loader";
 
 const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,7 +35,7 @@ const DetailPage = () => {
   const cart = useSelector((state: RootState) => state.cart.items);
   const cartItem = cart.find((item) => item.id === Number(id));
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
   if (isError) return <h1>Something went wrong</h1>;
   if (error) return <h1>{error.message}</h1>;
   if (!data) return <h1>No product found</h1>;
@@ -52,6 +53,7 @@ const DetailPage = () => {
 
       <ContentWrapper>
         {/* Rating Stars */}
+        <Category>Category: {data.category}</Category>
         <RatingWrapper>
           <Stars rating={data.rating.rate} />
         </RatingWrapper>
@@ -60,20 +62,19 @@ const DetailPage = () => {
         <Title>{data.title}</Title>
         <Description>{data.description}</Description>
         <Price>Rs {data.price}</Price>
-        <Category>Category: {data.category}</Category>
 
         <RatingWrapper style={{ gap: "1rem" }}>
           {cartItem ? (
             // Agar item already cart me hai to Quantity controls dikhao
             <QuantityControl>
               <QuantityButton
-                onClick={() => dispatch(decreaseQuantity(cartItem.id))}
+                onClick={() => dispatch(decreaseQuantity(data.id))}
               >
                 -
               </QuantityButton>
               <span>{cartItem.quantity}</span>
               <QuantityButton
-                onClick={() => dispatch(increaseQuantity(cartItem.id))}
+                onClick={() => dispatch(increaseQuantity(data.id))}
               >
                 +
               </QuantityButton>
@@ -89,3 +90,17 @@ const DetailPage = () => {
 };
 
 export default DetailPage;
+
+// List virtualization
+// lazy loading images and Code Splitting
+// Memoization (React.memo, useMemo, useCallback)
+//  React.memo for component
+// useMemo for expensive calculation
+// useCallback for functions
+
+// throttling and debouncing
+// Debounce → last event ke baad hi function run hota hai.
+
+// Throttle → function fixed interval pe hi run hota hai.
+// Minimize State & Avoid Unnecessary Re-renders
+//  Efficient State Management & Caching

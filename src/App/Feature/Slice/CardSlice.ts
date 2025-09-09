@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "../../../Interface/Interface"; // ✅ jahan aapne Product banaya hai, us file ka sahi path do
-
-export interface CartItem extends Product {
-  quantity: number;
-}
-
-interface CartState {
-  items: CartItem[];
-  shippingCharges: number;
-}
+import { CartState, Product } from "../../../Interface/Interface"; // ✅ jahan aapne Product banaya hai, us file ka sahi path do
 
 const initialState: CartState = {
   items: [],
@@ -19,7 +10,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // ✅ Add to Cart
+    
     addToCart: (state, action: PayloadAction<Product>) => {
       const product = action.payload;
       const existing = state.items.find((item) => item.id === product.id);
@@ -31,17 +22,17 @@ const cartSlice = createSlice({
       }
     },
 
-    // ✅ Remove from Cart
+  
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
 
-    // ✅ Clear cart
+    
     clearCart: (state) => {
       state.items = [];
     },
 
-    // ✅ Decrease quantity
+   
     decreaseQuantity: (state, action: PayloadAction<number>) => {
       const product = state.items.find((item) => item.id === action.payload);
       if (product) {
@@ -55,7 +46,7 @@ const cartSlice = createSlice({
       }
     },
 
-    // ✅ Increase quantity explicitly
+    
     increaseQuantity: (state, action: PayloadAction<number>) => {
       const product = state.items.find((item) => item.id === action.payload);
       if (product) {
@@ -65,7 +56,7 @@ const cartSlice = createSlice({
   },
 });
 
-// ✅ Export actions
+
 export const {
   addToCart,
   removeFromCart,
